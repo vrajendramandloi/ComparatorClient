@@ -11,6 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppPostDialogComponent } from './dialog/app-post-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -18,15 +21,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavbarComponent,
     CompTabMetaDataComponent,
     HomeComponent,
-    ErrorComponent
+    ErrorComponent,
+    AppPostDialogComponent
+  ],
+  entryComponents: [
+    AppPostDialogComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     MatCardModule,
     MatCheckboxModule,
     MatInputModule,
+    MatSelectModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'tableMetaData', component: CompTabMetaDataComponent },

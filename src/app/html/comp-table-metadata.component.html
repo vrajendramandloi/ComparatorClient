@@ -22,6 +22,9 @@
               <mat-error *ngIf="tableNames.hasError('tableNameRequired')">
                 Atleast 1 table name is required.
               </mat-error>
+              <mat-error *ngIf="tableNames.hasError('validateTableNameFormat')">
+                Table name should be in format Schema.TableName
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -32,8 +35,11 @@
             <mat-form-field style="width: 100%;">
               <input matInput placeholder="Primary Table Name: " [formControl]="primaryTableName">
               <mat-hint>Enter table names in format 'Schema.Table_Name'</mat-hint>
-              <mat-error *ngIf="primaryTableName.hasError('required')">
+              <mat-error *ngIf="primaryTableName.hasError('tableNameRequired')">
                 Primary table Name is required.
+              </mat-error>
+              <mat-error *ngIf="primaryTableName.hasError('validateTableNameFormat')">
+                Table name should be in format Schema.TableName
               </mat-error>
             </mat-form-field>
           </div>
@@ -43,8 +49,11 @@
             <mat-form-field style="width: 100%;">
               <input matInput placeholder="Secondary Table Name: " [formControl]="secondaryTableName">
               <mat-hint>Enter table names in format 'Schema.Table_Name'</mat-hint>
-              <mat-error *ngIf="secondaryTableName.hasError('required')">
+              <mat-error *ngIf="secondaryTableName.hasError('tableNameRequired')">
                 Secondary table Name is required.
+              </mat-error>
+              <mat-error *ngIf="secondaryTableName.hasError('validateTableNameFormat')">
+                Table name should be in format Schema.TableName
               </mat-error>
             </mat-form-field>
           </div>
@@ -58,8 +67,8 @@
                 [(formControl)]="primaryColumnNames"
                 rows=6></textarea>
               <mat-hint>Enter table names in format 'column1;column2;...'</mat-hint>
-              <mat-error *ngIf="primaryColumnNames.hasError('required')">
-                Atleast 1 Column Name is required.
+              <mat-error *ngIf="primaryColumnNames.hasError('columnNameRequired')">
+                  Atleast 1 Column Name or '*' is required
               </mat-error>
             </mat-form-field>
           </div>
@@ -71,8 +80,8 @@
                 [(formControl)]="secondaryColumnNames"
                 rows=6></textarea>
               <mat-hint>Enter table names in format 'column1;column2;...'</mat-hint>
-              <mat-error *ngIf="secondaryColumnNames.hasError('required')">
-                Atleast 1 Column Name is required.
+              <mat-error *ngIf="secondaryColumnNames.hasError('columnNameRequired')">
+                Atleast 1 Column Name or '*' is required
               </mat-error>
             </mat-form-field>
           </div>

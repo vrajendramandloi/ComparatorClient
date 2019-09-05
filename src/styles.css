@@ -8,3 +8,7 @@
   font-family: 'Roboto';
   src: url("/assets/font/Roboto-Regular.ttf") format("truetype");
 }
+
+html,body {
+  background-color: #FAFAFA;
+}
