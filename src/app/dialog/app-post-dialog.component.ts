@@ -1,10 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { IEnvModal } from '../modal/env-modal';
+import { IAppModal } from '../modal/app-modal';
 import { AppUtility } from '../util/app-utility';
 import { AppValidators } from '../util/app.validators';
-import { IAppModal } from '../modal/app-modal';
 
 @Component({
   selector: 'posts-dialog',
@@ -16,7 +15,7 @@ export class AppPostDialogComponent {
   isDialogValid = true;
   envModal = {} as IAppModal;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public envpost: IEnvModal) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public envpost: IAppModal) {}
 
   validateBothSelect() {
     if (!AppUtility.isNullOrEmptyObject(this.primaryEnv.errors)
@@ -27,7 +26,7 @@ export class AppPostDialogComponent {
     }
   }
 
-  postRequest(): IEnvModal {
+  postRequest(): IAppModal {
     this.envpost.primaryEnv = this.primaryEnv.value;
     this.envpost.secondaryEnv = this.secondaryEnv.value;
     return this.envpost;

@@ -1,31 +1,20 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { IAppModal } from '../modal/app-modal';
+import { ITableMeta } from '../modal/table-meta';
+import { IAppResponseModal } from '../modal/app-response-modal';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DoPostService {
-  constructor(private http: HttpClient) {  }
+  hostUrl = 'http://localhost:9786/compareTableMetaData';
 
-  getTableMetaData(appObject: IAppModal) {
-    console.log(appObject);
-  }
+  constructor(private http: HttpClient) {}
 
-  getAllPostData(): Observable<IAppModal[]> {
-    return this.http.get<IAppModal[]>(AppConstants.doPostUrl);
-  }
-
-  createPost(newPost: IAppModal): Observable<IAppModal> {
-    return this.http.post<IAppModal>(AppConstants.doPostUrl, JSON.stringify(newPost));
-  }
-
-  updatePost(post: IAppModal): Observable<IAppModal> {
-    return this.http.post<IAppModal>(AppConstants.doPostUrl + '/' + post.id, JSON.stringify(post));
-  }
-
-  deletePost(post: IAppModal) {
-    return this.http.delete(AppConstants.doPostUrl + '/' + post.id);
+  validateTableMetadata(tableObject: ITableMeta) {
+    console.log(JSON.stringify(tableObject));
+    const  headers = new  HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<IAppResponseModal>(this.hostUrl, JSON.stringify(tableObject), {headers})
+                    .subscribe((response: IAppResponseModal) => console.log(response.outputList[1]));
   }
 }

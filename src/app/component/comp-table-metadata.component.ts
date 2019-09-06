@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, ValidationErrors } from '@angular/forms';
-import { AppUtility } from '../util/app-utility';
-import { AppValidators } from '../util/app.validators';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AppPostDialogComponent } from '../dialog/app-post-dialog.component';
 import { ITableMeta } from '../modal/table-meta';
-import { IEnvModal } from '../modal/env-modal';
+import { AppUtility } from '../util/app-utility';
+import { AppValidators } from '../util/app.validators';
+import { DoPostService } from '../service/do-post.service';
 
 @Component({
   selector: 'app-comp-tab-metadata',
@@ -20,7 +20,7 @@ export class CompTabMetaDataComponent implements OnInit {
   priSecMatchWithColumns = false;
   tableMetaRequestModal = {} as ITableMeta;
 
-  constructor(public matDialog: MatDialog) {
+  constructor(public matDialog: MatDialog, public postService: DoPostService) {
     console.log('Constructor invoked');
   }
   ngOnInit(): void {
@@ -66,7 +66,7 @@ export class CompTabMetaDataComponent implements OnInit {
     }
     if (isFormValid) {
       if (!this.priSecMatchWithColumns) {
-        this.tableMetaRequestModal.tableNames = this.tableNames.value;
+        this.tableMetaRequestModal.tableNames = this.tableNames.value.split(';');
       } else {
         this.tableMetaRequestModal.primaryTableName = this.primaryTableName.value;
         this.tableMetaRequestModal.secondaryTableName = this.secondaryTableName.value;
@@ -75,11 +75,13 @@ export class CompTabMetaDataComponent implements OnInit {
       }
 
       console.log('Submitted to Server' + this.tableMetaRequestModal);
-      this.matDialog.open(AppPostDialogComponent, {data: this.tableMetaRequestModal})
+      this.matDialog.open(AppPostDialogComponent, { data: this.tableMetaRequestModal })
         .afterClosed()
         .subscribe(result => {
-          console.log(result + 'result from dialog ' +
-            this.tableMetaRequestModal.primaryEnv + ' -- ' + this.tableMetaRequestModal.secondaryEnv);
+          if ('POST' === result) {
+            console.log('posting request to server.');
+            this.postService.validateTableMetadata(this.tableMetaRequestModal);
+          }
         });
     }
   }
