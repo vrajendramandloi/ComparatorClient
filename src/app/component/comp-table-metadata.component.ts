@@ -15,8 +15,7 @@ export class CompTabMetaDataComponent implements OnInit {
   tableNames = new FormControl('test.asd');
   primaryTableName = new FormControl();
   secondaryTableName = new FormControl();
-  primaryColumnNames = new FormControl();
-  secondaryColumnNames = new FormControl();
+  columnNames = new FormControl();
   priSecMatchWithColumns = false;
   tableMetaRequestModal = {} as ITableMeta;
 
@@ -24,11 +23,11 @@ export class CompTabMetaDataComponent implements OnInit {
     console.log('Constructor invoked');
   }
   ngOnInit(): void {
+    this.priSecMatchWithColumns = true;
     this.tableNames.markAsTouched();
     this.primaryTableName.markAsTouched();
     this.secondaryTableName.markAsTouched();
-    this.primaryColumnNames.markAsTouched();
-    this.secondaryColumnNames.markAsTouched();
+    this.columnNames.markAsTouched();
   }
 
   toggleValidationState() {
@@ -48,19 +47,14 @@ export class CompTabMetaDataComponent implements OnInit {
         this.primaryTableName.setErrors(priTableValErrors);
         isFormValid = false;
       }
-      const priTableColumnValErrors = AppValidators.validateColumnNames(this.primaryColumnNames);
-      if (!AppUtility.isNullOrEmptyObject(priTableColumnValErrors)) {
-        this.primaryColumnNames.setErrors(priTableColumnValErrors);
-        isFormValid = false;
-      }
       const secTableValErrors = AppValidators.validateTableNameFormat(this.secondaryTableName);
       if (!AppUtility.isNullOrEmptyObject(secTableValErrors)) {
         this.secondaryTableName.setErrors(secTableValErrors);
         isFormValid = false;
       }
-      const secTableColumnValErrors = AppValidators.validateColumnNames(this.secondaryColumnNames);
-      if (!AppUtility.isNullOrEmptyObject(secTableColumnValErrors)) {
-        this.secondaryColumnNames.setErrors(secTableColumnValErrors);
+      const columnNamesValErrors = AppValidators.validateColumnNames(this.columnNames);
+      if (!AppUtility.isNullOrEmptyObject(columnNamesValErrors)) {
+        this.columnNames.setErrors(columnNamesValErrors);
         isFormValid = false;
       }
     }
@@ -70,8 +64,7 @@ export class CompTabMetaDataComponent implements OnInit {
       } else {
         this.tableMetaRequestModal.primaryTableName = this.primaryTableName.value;
         this.tableMetaRequestModal.secondaryTableName = this.secondaryTableName.value;
-        this.tableMetaRequestModal.primaryTableColumn = this.primaryColumnNames.value;
-        this.tableMetaRequestModal.secondaryTableColumn = this.secondaryColumnNames.value;
+        this.tableMetaRequestModal.columnNames = this.columnNames.value.split(';');
       }
 
       console.log('Submitted to Server' + this.tableMetaRequestModal);
@@ -80,6 +73,7 @@ export class CompTabMetaDataComponent implements OnInit {
         .subscribe(result => {
           if ('POST' === result) {
             console.log('posting request to server.');
+            /*this.postService.validatehelloWorld();*/
             this.postService.validateTableMetadata(this.tableMetaRequestModal);
           }
         });
@@ -90,8 +84,7 @@ export class CompTabMetaDataComponent implements OnInit {
     this.tableNames = new FormControl();
     this.primaryTableName = new FormControl();
     this.secondaryTableName = new FormControl();
-    this.primaryColumnNames = new FormControl();
-    this.secondaryColumnNames = new FormControl();
+    this.columnNames = new FormControl();
     this.ngOnInit();
   }
 }

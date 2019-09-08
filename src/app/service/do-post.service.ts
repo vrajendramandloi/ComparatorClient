@@ -11,6 +11,11 @@ export class DoPostService {
 
   constructor(private http: HttpClient) {}
 
+  validatehelloWorld() {
+    return this.http.get<string>('http://localhost:9786/helloworld')
+                .subscribe(response => console.log(response));
+  }
+
   validateTableMetadata(tableObject: ITableMeta) {
     console.log(JSON.stringify(tableObject));
     const  headers = new  HttpHeaders().set('Content-Type', 'application/json');

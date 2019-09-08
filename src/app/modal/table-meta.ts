@@ -4,6 +4,5 @@ export interface ITableMeta extends IAppModal {
   tableNames: string[];
   primaryTableName: string;
   secondaryTableName: string;
-  primaryTableColumn: string;
-  secondaryTableColumn: string;
+  columnNames: string[];
 }

@@ -60,27 +60,14 @@
         </div>
       </div>
       <div class="row" [hidden]="!priSecMatchWithColumns">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div class="form-group">
             <mat-form-field style="width: 100%;">
-              <textarea matInput placeholder="Primary Table Column Names:"
-                [(formControl)]="primaryColumnNames"
+              <textarea matInput placeholder="Columns to compare:"
+                [(formControl)]="columnNames"
                 rows=6></textarea>
-              <mat-hint>Enter table names in format 'column1;column2;...'</mat-hint>
-              <mat-error *ngIf="primaryColumnNames.hasError('columnNameRequired')">
-                  Atleast 1 Column Name or '*' is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <mat-form-field style="width: 100%;">
-              <textarea matInput placeholder="Secondary Table Column Names:"
-                [(formControl)]="secondaryColumnNames"
-                rows=6></textarea>
-              <mat-hint>Enter table names in format 'column1;column2;...'</mat-hint>
-              <mat-error *ngIf="secondaryColumnNames.hasError('columnNameRequired')">
+              <mat-hint>Enter Columns Names in format 'column1;column2;...'</mat-hint>
+              <mat-error *ngIf="columnNames.hasError('columnNameRequired')">
                 Atleast 1 Column Name or '*' is required
               </mat-error>
             </mat-form-field>
