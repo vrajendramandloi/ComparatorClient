@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ITableMeta } from '../modal/table-meta';
 import { IAppResponseModal } from '../modal/app-response-modal';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,9 @@ export class DoPostService {
                 .subscribe(response => console.log(response));
   }
 
-  validateTableMetadata(tableObject: ITableMeta) {
+  validateTableMetadata(tableObject: ITableMeta): Observable<IAppResponseModal> {
     console.log(JSON.stringify(tableObject));
     const  headers = new  HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<IAppResponseModal>(this.hostUrl, JSON.stringify(tableObject), {headers})
-                    .subscribe((response: IAppResponseModal) => console.log(response.outputList[1]));
+    return this.http.post<IAppResponseModal>(this.hostUrl, JSON.stringify(tableObject), {headers});
   }
 }

@@ -6,6 +6,7 @@ import { ITableMeta } from '../modal/table-meta';
 import { AppUtility } from '../util/app-utility';
 import { AppValidators } from '../util/app.validators';
 import { DoPostService } from '../service/do-post.service';
+import { IAppResponseModal } from '../modal/app-response-modal';
 
 @Component({
   selector: 'app-comp-tab-metadata',
@@ -18,12 +19,20 @@ export class CompTabMetaDataComponent implements OnInit {
   columnNames = new FormControl();
   priSecMatchWithColumns = false;
   tableMetaRequestModal = {} as ITableMeta;
+  isSubmitEnabled = true;
+  isProgressSpinnerEnabled = false;
+  outputResponseList: Array<string>;
+  outputErrorList: Array<string>;
 
   constructor(public matDialog: MatDialog, public postService: DoPostService) {
     console.log('Constructor invoked');
   }
   ngOnInit(): void {
     this.priSecMatchWithColumns = true;
+    this.primaryTableName.setValue('VRAJ_OWNER.TEMP_TABLE1');
+    this.secondaryTableName.setValue('VRAJ_OWNER.TEMP_TABLE2');
+    this.columnNames.setValue('TEMP_ID;SEGMENT_NUMBER;TEMP_DATE;TEMP_IS_TAKEN;TEMP_NAME;TEMP_ADDRESS');
+
     this.tableNames.markAsTouched();
     this.primaryTableName.markAsTouched();
     this.secondaryTableName.markAsTouched();
@@ -72,9 +81,21 @@ export class CompTabMetaDataComponent implements OnInit {
         .afterClosed()
         .subscribe(result => {
           if ('POST' === result) {
-            console.log('posting request to server.');
+            this.isProgressSpinnerEnabled = true;
+            this.isSubmitEnabled = false;
             /*this.postService.validatehelloWorld();*/
-            this.postService.validateTableMetadata(this.tableMetaRequestModal);
+            this.postService.validateTableMetadata(this.tableMetaRequestModal)
+            .subscribe((response: IAppResponseModal) => {
+              if (response != null && response.outputList.length !== 0) {
+                this.outputResponseList = response.outputList;
+                if (response.errorList.length !== 0) {
+                  this.outputErrorList = response.errorList;
+                }
+              }
+              console.log('Response Log:' + response.toString());
+              this.isProgressSpinnerEnabled = false;
+              this.isSubmitEnabled = true;
+            });
           }
         });
     }

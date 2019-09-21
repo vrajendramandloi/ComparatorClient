@@ -83,3 +83,28 @@
     </div>
   </div>
 </div>
+<div *ngIf="outputResponseList?.length > 0 || outputErrorList?.length > 0"
+      class="card shadow bg-white rounded"
+      style="margin: 0 auto;width: 98%;max-width: 1200px; margin-top: 20px;">
+  <div class="card-body">
+    <h5 class="card-title" >Table Metadata Comparision Results</h5>
+    <hr />
+    <div class="container">
+      <ul>
+        <li *ngFor="let respItem of outputResponseList">
+          {{ respItem }}
+        </li>
+      </ul>
+      <ul>
+        <li *ngFor="let errorItem of outputErrorList">
+          {{ errorItem }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div *ngIf="isProgressSpinnerEnabled" class="spinner-div">
+  <div class="spinner-div-center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</div>
