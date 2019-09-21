@@ -30,3 +30,9 @@ html,body {
   margin-left: 40%;
   margin-top: 40%;
 }
+
+.default-card {
+  margin: 0 auto;
+  width: 98%;
+  max-width: 1200px
+}
