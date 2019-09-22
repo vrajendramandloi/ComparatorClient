@@ -13,7 +13,7 @@ import { IAppResponseModal } from '../modal/app-response-modal';
   templateUrl: '../html/comp-table-metadata.component.html'
 })
 export class CompTabMetaDataComponent implements OnInit {
-  tableNames = new FormControl('test.asd');
+  tableNames = new FormControl();
   primaryTableName = new FormControl();
   secondaryTableName = new FormControl();
   columnNames = new FormControl();
@@ -28,11 +28,6 @@ export class CompTabMetaDataComponent implements OnInit {
     console.log('Constructor invoked');
   }
   ngOnInit(): void {
-    this.priSecMatchWithColumns = true;
-    this.primaryTableName.setValue('VRAJ_OWNER.TEMP_TABLE1');
-    this.secondaryTableName.setValue('VRAJ_OWNER.TEMP_TABLE2');
-    this.columnNames.setValue('TEMP_ID;SEGMENT_NUMBER;TEMP_DATE;TEMP_IS_TAKEN;TEMP_NAME;TEMP_ADDRESS');
-
     this.tableNames.markAsTouched();
     this.primaryTableName.markAsTouched();
     this.secondaryTableName.markAsTouched();
