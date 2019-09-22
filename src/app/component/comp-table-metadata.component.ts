@@ -42,6 +42,7 @@ export class CompTabMetaDataComponent implements OnInit {
   toggleValidationState() {
     this.priSecMatchWithColumns = !this.priSecMatchWithColumns;
   }
+
   submitForm() {
     let isFormValid = true;
     if (!this.priSecMatchWithColumns) {

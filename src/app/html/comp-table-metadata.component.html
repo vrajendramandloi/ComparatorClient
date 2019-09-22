@@ -84,16 +84,19 @@
   </div>
 </div>
 <div *ngIf="outputResponseList?.length > 0 || outputErrorList?.length > 0"
-      class="card shadow bg-white rounded default-card">
+      class="card shadow bg-white rounded default-card"
+      style="margin-top: 10px;">
   <div class="card-body">
     <h5 class="card-title" >Table Metadata Comparision Results</h5>
     <hr />
     <div class="container">
+      <h6>Output Scripts</h6>
       <ul>
         <li *ngFor="let respItem of outputResponseList">
           {{ respItem }}
         </li>
       </ul>
+      <h6>Errors:</h6>
       <ul>
         <li *ngFor="let errorItem of outputErrorList">
           {{ errorItem }}
